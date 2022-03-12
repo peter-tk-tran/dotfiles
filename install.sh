@@ -1,19 +1,11 @@
 #!/bin/bash
 
-# installing wget
-if hash wget 2>/dev/null; then
-    echo "wget exists."
-else
-    echo "Installing wget"
-    brew install wget
-fi
-
 # installing neovim nightly
 if hash nvim 2>/dev/null; then
-    echo "nvim exiss."
+    echo "nvim exists."
 else
-    echo "Installing nvim nightly"
-    wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    echo "Installing nvim"
+    brew install neovim
 fi
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
