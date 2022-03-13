@@ -74,13 +74,6 @@ nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => LSP
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Python Language Server
-" lua require('lspconfig').pyright.setup{}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fzf
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open FZF and searh in vim
@@ -107,10 +100,10 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Rename word
-nmap <leader>rr <Plug>(coc-rename)
+" nmap <leader>rr <Plug>(coc-rename)
 
 " Rename all instances of word in project
-nmap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
+" nmap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "=> Files
@@ -296,13 +289,6 @@ endif
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-" GoTo code navigation
-nmap <silent> <Leader>gd <Plug>(coc-definition)
-nmap <silent> <Leader>gr <Plug>(coc-references)
-
-" Get definition in hover box
-nnoremap <silent> <Leader>d :silent! call CocActionAsync('doHover')<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Lightline Configuration
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

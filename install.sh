@@ -9,7 +9,6 @@ else
     brew install neovim
 fi
 
-
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
@@ -45,6 +44,7 @@ git config --global alias.a "add ."
 git config --global alias.p "push"
 git config --global alias.s "status"
 # TODO add git hooks logic.
+
 
 # Python setup
 if hash pyright 2>/dev/null; then
