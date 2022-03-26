@@ -7,5 +7,6 @@ return require('packer').startup(function()
   requires = { {'nvim-lua/plenary.nvim'} }
   }
   use 'nvim-telescope/telescope-fzy-native.nvim'
+  use 'neomvim/nvim-lspconfig'
 
 end)
