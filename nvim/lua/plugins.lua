@@ -1,5 +1,11 @@
 return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
-  use 'neovim/nvim-lspconfig'
+  use 'nvim-lua/popup.nvim'
+  use {
+  'nvim-telescope/telescope.nvim',
+  requires = { {'nvim-lua/plenary.nvim'} }
+  }
+  use 'nvim-telescope/telescope-fzy-native.nvim'
+
 end)

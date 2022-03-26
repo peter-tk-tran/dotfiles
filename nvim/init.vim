@@ -1,17 +1,16 @@
+" Run time is a list of base folders that nvim considers important. Kinda like an environment
 set runtimepath^=~/.vim runtimepath+=~/.vim/after"
 let &packpath=&runtimepath
 
-source ~/.vimrc
+" gets installed plugins
 lua require('plugins')
-lua require('nvim-cmp')
-lua require('lspconfig').pyright.setup{}
+lua require('telescope')
 
 " LSP config
-nnoremap <silent> <Leader>gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <Leader>gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <Leader>gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> <Leader>gi <cmd>lua vim.lsp.buf.implmentation()<CR>
-nnoremap <silent> <Leader>K <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> <Leader>gd <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> <Leader>gD <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> <Leader>gr <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> <Leader>h <cmd>lua vim.lsp.buf.hover()<CR>
 
-
+source ~/.vimrc
 "PackerSync
