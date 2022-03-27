@@ -8,3 +8,4 @@ source ~/.vimrc
 lua require('plugins')
 lua require('telescope')
 lua require('python_setup')
+lua require('auto_complete')
