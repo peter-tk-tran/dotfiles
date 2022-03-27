@@ -1,6 +1,5 @@
 #!/bin/bash
 
-vim +PlugInstall +qall
 # installing neovim nightly
 if hash nvim 2>/dev/null; then
     echo "nvim exists."
@@ -17,6 +16,8 @@ cp ./.vimrc ~/.vimrc
 
 rm -r ~/.config/nvim
 cp -r ./nvim ~/.config/nvim
+vim +PlugInstall +qall
+nvim +PackerSync
 
 
 # git configuration
