@@ -190,6 +190,7 @@ let g:gruvbox_contrast_dark="hard"
 set t_Co=256
 
 " Background
+highlight Normal guibg=black guifg=white
 set background=dark
 
 " Highlight TODO, FIXME, NOTE etc.
