@@ -27,12 +27,33 @@ setup_vim() {
     nvim +PackerSync
 }
 
+setup_langserver() {
+    if hash efm-langserver 2>/dev/null; then
+        echo "efm-langserver exists"
+    else
+        brew install efm-langserver
+    fi
+}
+
 setup_python_env() {
     # Python setup
     if hash pyright 2>/dev/null; then
         echo "pyright exists"
     else
         npm i -g pyright
+    fi
+
+    if hash black 2>  /dev/null; then
+        echo "black exists"
+    else
+        brew install black
+
+    fi
+
+    if hash isort 2>  /dev/null; then
+        echo "isort exists"
+    else
+        brew install isort
     fi
 }
 
@@ -46,3 +67,4 @@ git config --global alias.s "status"
 
 setup_vim
 setup_python_env
+setup_langserver
