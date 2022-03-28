@@ -94,6 +94,16 @@ _G.packer_plugins = {
     path = "/Users/petertran/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
+  ["efm-langserver"] = {
+    loaded = true,
+    path = "/Users/petertran/.local/share/nvim/site/pack/packer/start/efm-langserver",
+    url = "https://github.com/mattn/efm-langserver"
+  },
+  ["lsp-format.nvim"] = {
+    loaded = true,
+    path = "/Users/petertran/.local/share/nvim/site/pack/packer/start/lsp-format.nvim",
+    url = "https://github.com/lukas-reineke/lsp-format.nvim"
+  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/Users/petertran/.local/share/nvim/site/pack/packer/start/lspkind-nvim",

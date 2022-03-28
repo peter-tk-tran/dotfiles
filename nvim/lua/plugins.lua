@@ -9,7 +9,6 @@ return require('packer').startup(function()
   use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'neovim/nvim-lspconfig'
 
-
   -- Auto Completion
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
@@ -18,5 +17,10 @@ return require('packer').startup(function()
   use 'hrsh7th/nvim-cmp'
   use 'L3MON4D3/LuaSnip'
   use 'onsails/lspkind-nvim'
+
+  -- Formatter
+  use 'lukas-reineke/lsp-format.nvim'
+  use 'mattn/efm-langserver'
+
 
 end)

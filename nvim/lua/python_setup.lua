@@ -1,4 +1,19 @@
-require'lspconfig'.pyright.setup{} -- connect to server
+-- Formatting Setup
+require "lspconfig".efm.setup {
+    init_options = {documentFormatting = true},
+    settings = {
+        rootMarkers = {".git/"},
+        languages = {
+            python = {
+                {formatCommand = "black --quiet -", formatStdin = true},
+                {formatCommand = "isort -", formatStdin = true}
+            }
+        }
+    },
+    on_attach = function(client)
+        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+    end,
+}
 
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -30,15 +45,4 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
-for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
-  }
-end
+require'lspconfig'.pyright.setup{on_attach = on_attach}
