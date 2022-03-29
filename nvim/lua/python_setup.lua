@@ -1,20 +1,3 @@
--- Formatting Setup
-require "lspconfig".efm.setup {
-    init_options = {documentFormatting = true},
-    settings = {
-        rootMarkers = {".git/"},
-        languages = {
-            python = {
-                {formatCommand = "black --quiet -", formatStdin = true},
-                {formatCommand = "isort -", formatStdin = true}
-            }
-        }
-    },
-    on_attach = function(client)
-        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
-    end,
-}
-
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
@@ -25,9 +8,6 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -45,4 +25,35 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-require'lspconfig'.pyright.setup{on_attach = on_attach}
+require('lspconfig')['pyright'].setup {
+    root_dir = function() return vim.loop.cwd() end,
+    on_attach = on_attach,
+    flags = {
+      -- This will be the default in neovim 0.7+
+      debounce_text_changes = 150,
+    },
+    -- analysis = {
+    --   autoSearchPaths = true,
+    --   diagnosticMode = "workspace",
+    --   useLibraryCodeForTypes = true
+    -- },
+    single_file_support = true
+}
+
+require "lspconfig".efm.setup {
+  init_options = {documentFormatting = true},
+  filetypes = {'python'},
+  settings = {
+      rootMarkers = {".git/"},
+      languages = {
+          python = {
+              {formatCommand = "black --quiet --experimental-string-processing -", formatStdin = true},
+              {formatCommand = "isort --line-length 120 -m VERTICAL_HANGING_INDENT --tc -", formatStdin = true},
+          }
+      }
+  },
+  on_attach = function(client, bufnr)
+        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
+      end
+}
+
