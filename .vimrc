@@ -308,7 +308,7 @@ set nofoldenable
 map z za
 
 " adding noqa so black doesn't autoformat
-nmap <silent> <Leader>b O__import__("pdb").set_trace()  # XXX<Esc>
+nmap <silent> <Leader>b Obreakpoint()  # XXX<Esc>
 
 " todo shortcut
 "nmap <silent> <Leader>t O# TODO<Esc>a<SPACE>
@@ -329,4 +329,5 @@ let g:syntastic_check_on_wq = 1
 vmap <C-c> "+y<CR><CR>
 
 "nerd Tree Mapping
-map <C-t> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+map <C-n> :NERDTreeToggle<CR>
