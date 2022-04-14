@@ -23,11 +23,6 @@ Plug 'airblade/vim-gitgutter'
 "Python
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 
-" Search
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'jremmen/vim-ripgrep'
-
 " Utility
 Plug 'mbbill/undotree'
 Plug 'bronson/vim-trailing-whitespace'
@@ -74,13 +69,6 @@ nmap <leader>gs :G<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gj :diffget //3<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Fzf
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Open FZF and searh in vim
-map <C-f> <Esc><Esc>:Files!<CR>
-inoremap <C-f> <Esc><Esc>:BLines!<CR>
-map <C-g> <Esc><Esc>:BCommits!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Note Taking
