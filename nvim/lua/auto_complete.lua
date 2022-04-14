@@ -34,7 +34,7 @@ lspkind.init()
       { name = 'nvim_lsp' },
       { name = 'path' },
       { name = 'luasnip' }, -- For luasnip users.
-      { name = 'buffer' , keyword_length = 3},
+      { name = 'buffer' , keyword_length = 2},
     }),
 
     experimental = {

@@ -34,6 +34,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'preservim/nerdtree'
 Plug 'godlygeek/tabular'
 Plug 'mhinz/vim-startify'
@@ -190,8 +191,8 @@ let g:gruvbox_contrast_dark="hard"
 set t_Co=256
 
 " Background
-highlight Normal guibg=black guifg=white
 set background=dark
+highlight Normal guibg=black guifg=white ctermbg=black
 
 " Highlight TODO, FIXME, NOTE etc.
 if has('autocmd') && v:version > 701
@@ -216,7 +217,7 @@ set nobackup
 set noswapfile
 set nowritebackup
 
-nnoremap <F5> :UndotreeToggle<cr>
+nnoremap <leader>u :UndotreeToggle<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tabbing
@@ -340,4 +341,4 @@ let g:syntastic_check_on_wq = 1
 vmap <C-c> "+y<CR><CR>
 
 "nerd Tree Mapping
-map <C-n> :NERDTreeToggle<CR>
+map <C-t> :NERDTreeToggle<CR>
