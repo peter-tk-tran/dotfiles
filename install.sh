@@ -5,7 +5,7 @@ setup_vim() {
         echo "nvim exists."
     else
         echo "Installing nvim"
-        brew install neovim
+        brew install neovim --HEAD
     fi
 
     # setting up packer; this manages neovim plugins
