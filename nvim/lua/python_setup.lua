@@ -22,7 +22,10 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  -- require "lsp_signature".setup({})
 end
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 require('lspconfig')['pyright'].setup {
     root_dir = function() return vim.loop.cwd() end,
@@ -31,7 +34,8 @@ require('lspconfig')['pyright'].setup {
       -- This will be the default in neovim 0.7+
       debounce_text_changes = 150,
     },
-    single_file_support = true
+    single_file_support = true,
+    capabilities = capabilities,
 }
 
 require "lspconfig".efm.setup {
@@ -41,8 +45,8 @@ require "lspconfig".efm.setup {
       rootMarkers = {".git/"},
       languages = {
           python = {
+              {formatCommand = "isort --line-length 120 -m VERTICAL_HANGING_INDENT --tc --profile black -", formatStdin = true},
               {formatCommand = "black --quiet --experimental-string-processing -", formatStdin = true},
-              {formatCommand = "isort --line-length 120 -m VERTICAL_HANGING_INDENT --tc -", formatStdin = true},
           }
       }
   },

@@ -33,7 +33,6 @@ Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'mbbill/undotree'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'tpope/vim-commentary'
-" Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'preservim/nerdtree'
@@ -118,6 +117,7 @@ let g:cntrlp_user_command=['.git/', 'git --git-dir=%s/.git ls-files -oc --exclud
 " copy path of current buffer to clipbaord.
 nmap cp :let @" = expand("%:p")<CR>
 
+nmap <c-s> :w<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -322,7 +322,11 @@ nmap <silent> <Leader>b Obreakpoint()  # XXX<Esc>
 "nmap <silent> <Leader>t O# TODO<Esc>a<SPACE>
 " To make sure za doesn't fold everything on first use
 set foldlevelstart=20
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Pydocstring
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <silent> <C-d> <Plug>(pydocstring)
+let g:pydocstring_formatter = 'google'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Syntastic Configuration
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -341,6 +345,6 @@ map <C-n> :NERDTreeToggle<CR>
 
 lua vim.g.snippets = "luasnip"
 lua require('plugins')
-lua require('auto_complete')
 lua require('python_setup')
 lua require('snips')
+lua require('auto_complete')
