@@ -193,8 +193,11 @@ let g:gruvbox_contrast_dark="hard"
 set t_Co=256
 
 " Background
-set background=dark
-highlight Normal guibg=black guifg=white ctermbg=black
+" set background=dark
+" highlight Normal guibg=black guifg=white ctermbg=black
+"
+" Feeling out transparent backgrounds
+hi Normal guibg=NONE ctermbg=NONE
 
 " Highlight TODO, FIXME, NOTE etc.
 if has('autocmd') && v:version > 701
@@ -281,7 +284,7 @@ fun! CleanExtraSpaces()
 endfun
 
 if has("autocmd")
-    autocmd BufWritePre *.h,*.c,*.java,*.vimrc,*.txt,*.js,*.py,*.wiki,*.sh,*.coffee,*.ino,*cs :call CleanExtraSpaces()
+    autocmd BufWritePre *.h,*.c,*.java,*.vimrc,*.txt,*.js,*.py,*.wiki,*.sh,*.coffee,*.sql,*.ino,*cs,*.yaml :call CleanExtraSpaces()
 endif
 
 

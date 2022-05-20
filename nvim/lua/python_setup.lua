@@ -30,10 +30,6 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 require('lspconfig')['pyright'].setup {
     root_dir = function() return vim.loop.cwd() end,
     on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    },
     single_file_support = true,
     capabilities = capabilities,
 }
@@ -45,13 +41,13 @@ require "lspconfig".efm.setup {
       rootMarkers = {".git/"},
       languages = {
           python = {
-              {formatCommand = "isort --line-length 120 -m VERTICAL_HANGING_INDENT --tc --profile black -", formatStdin = true},
+              {formatCommand = "isort --line-length 120 -m VERTICAL_HANGING_INDENT -sp ~/.isort.cfg --tc --profile black -", formatStdin = true},
               {formatCommand = "black --quiet --experimental-string-processing -", formatStdin = true},
           }
       }
   },
   on_attach = function(client, bufnr)
-        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting()")
-      end
+    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+  end
 }
 
