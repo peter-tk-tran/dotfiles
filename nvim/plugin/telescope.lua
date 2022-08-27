@@ -15,7 +15,6 @@ vim.keymap.set("n", "<C-f>", function()
     require("telescope.builtin").find_files()
 end, {silent = true})
 
-
 vim.keymap.set("n", "<leader>lg", function()
     require("telescope.builtin").live_grep()
 end, {silent = true})

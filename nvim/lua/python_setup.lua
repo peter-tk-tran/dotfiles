@@ -32,18 +32,35 @@ require('lspconfig')['pyright'].setup {
     on_attach = on_attach,
     single_file_support = true,
     capabilities = capabilities,
+      settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          diagnosticMode = "workspace",
+          useLibraryCodeForTypes = true,
+          typeCheckingMode = 'off',
+          useLibraryCodeForTypes = true,
+        },
+      },
+    },
 }
 
 require "lspconfig".efm.setup {
   init_options = {documentFormatting = true},
-  filetypes = {'python'},
+  filetypes = {'python', 'sql', 'json'},
   settings = {
       rootMarkers = {".git/"},
       languages = {
           python = {
               {formatCommand = "isort --line-length 120 -m VERTICAL_HANGING_INDENT -sp ~/.isort.cfg --tc --profile black -", formatStdin = true},
-              {formatCommand = "black --quiet --experimental-string-processing -", formatStdin = true},
-          }
+              {formatCommand = "black --line-length 120 --quiet --preview -", formatStdin = true},
+          },
+          sql = {
+              {formatCommand = "pg_format -i -s 2 -W 1", formatStdin = true},
+          },
+          -- json = {
+          --     {formatCommand = "jq . --indent 4 -"},
+          -- }
       }
   },
   on_attach = function(client, bufnr)
@@ -51,3 +68,12 @@ require "lspconfig".efm.setup {
   end
 }
 
+-- require'lspconfig'.sqlls.setup{
+--     root_dir = function() return vim.loop.cwd() end,
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     filetypes = {"sql"},
+--     settings = {
+--     }
+
+-- }
