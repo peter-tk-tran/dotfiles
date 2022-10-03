@@ -32,7 +32,7 @@ require('lspconfig')['pyright'].setup {
     on_attach = on_attach,
     single_file_support = true,
     capabilities = capabilities,
-      settings = {
+    settings = {
       python = {
         analysis = {
           autoSearchPaths = true,
