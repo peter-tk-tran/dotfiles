@@ -150,7 +150,8 @@ set lazyredraw
 " Remove mode (shown in lightline anyways)
 set noshowmode
 
-
+" lua vim.o.ls = 0
+" lua vim.o.ch = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Color and Fonts
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -181,6 +182,11 @@ set colorcolumn=120 " Column at 120 chars
 set termguicolors
 lua << EOF
 require("catppuccin").setup({
+    dim_inactive = {
+		enabled = true,
+		shade = "dark",
+		percentage = 0.15,
+	},
     integrations = {
         cmp = true,
         gitgutter = true,
@@ -229,9 +235,9 @@ set autoindent " maintain indentation on newline
 set smartindent " insert new indentation if needed
 
 " Wrapping text
-set textwidth=120 " Set length to wrap at
+" set textwidth=120 " Set length to wrap at
 set nowrap " No text wrapping
-set linebreak    " Set wrap to insert linebreak
+" set linebreak    " Set wrap to insert linebreak
 if has('autocmd')
      autocmd FileType * setlocal formatoptions+=t " overrides filetype plugin
 endif
