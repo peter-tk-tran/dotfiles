@@ -154,43 +154,34 @@ set noshowmode
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Color and Fonts
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua << EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    disable = {},
-  },
-  indent = {
-    enable = false,
-    disable = {},
-  },
-  ensure_installed = {
-      'python',
-      'sql',
-      'typescript',
-      'javascript',
-      'rust'
-  },
-}
-EOF
+
+" Highlight keywords in language
+syntax enable
+
+" Syntax highlighting
+filetype off
+filetype plugin indent on
+syntax on
+
 " 120 char line length
-match Error /\%121v.\+/ " Highlight chars over 120
+match Error /\%121v.\+/ " Highlight chars over 80
 set colorcolumn=120 " Column at 120 chars
 
 " Colorscheme
-set termguicolors
-lua << EOF
-require("catppuccin").setup({
-    integrations = {
-        cmp = true,
-        gitgutter = true,
-        telescope = true,
-		treesitter = true,
-    }
-})
-EOF
-let g:catppuccin_flavour = "mocha" " latte, frappe, macchiato, mocha
-colorscheme catppuccin
+colorscheme gruvbox
+
+"Increase constrast in gruvbox
+let g:gruvbox_contrast_dark="hard"
+
+" Enable 256 colors palette
+set t_Co=256
+
+" Background
+" set background=dark
+" highlight Normal guibg=black guifg=white ctermbg=black
+"
+" Feeling out transparent backgrounds
+hi Normal guibg=NONE ctermbg=NONE
 
 " Highlight TODO, FIXME, NOTE etc.
 if has('autocmd') && v:version > 701
@@ -202,6 +193,7 @@ if has('autocmd') && v:version > 701
                     \ )
     augroup END
 endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Backups
@@ -230,10 +222,11 @@ set smartindent " insert new indentation if needed
 
 " Wrapping text
 set textwidth=120 " Set length to wrap at
-set nowrap " No text wrapping
-set linebreak    " Set wrap to insert linebreak
+set nowrap " No text wrapping"
+"set linebreak    " Set wrap to insert linebreak
 if has('autocmd')
-     autocmd FileType * setlocal formatoptions+=t " overrides filetype plugin
+    autocmd FileType * setlocal formatoptions+=t " overrides filetype plugin
+                                                 " format options setting
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -288,7 +281,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 let g:airline_theme='angr'
 let g:airline_powerline_fonts = 1"
 let g:lightline = {
-    \ 'colorscheme': 'catppuccin',
     \ 'separator': { 'left': '', 'right': '' },
     \ 'subseparator': { 'left': '', 'right': '' }
     \ }
@@ -330,6 +322,8 @@ map <C-n> :NERDTreeToggle<CR>
 
 lua vim.g.snippets = "luasnip"
 lua require('plugins')
-lua require('python_setup')
+lua require('language_setup')
 lua require('snips')
 lua require('auto_complete')
+
+set mouse=a

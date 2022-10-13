@@ -10,10 +10,6 @@ return require('packer').startup(function()
   use 'nvim-telescope/telescope-media-files.nvim'
   use 'neovim/nvim-lspconfig'
 
-  -- Color Scheme
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-
   -- Auto Completion
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'

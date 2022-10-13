@@ -23,6 +23,9 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   -- require "lsp_signature".setup({})
+  --
+  --
+  vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)")
 end
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -45,6 +48,30 @@ require('lspconfig')['pyright'].setup {
     },
 }
 
+require('lspconfig')['rust_analyzer'].setup {
+    on_attach=on_attach,
+    capabilities = capabilities,
+    settings = {
+        ["rust-analyzer"] = {
+            imports = {
+                granularity = {
+                    group = "module",
+                },
+                prefix = "self",
+            },
+            cargo = {
+                buildScripts = {
+                    enable = true,
+                },
+            },
+            procMacro = {
+                enable = true
+            },
+        },
+    },
+}
+
+
 require "lspconfig".efm.setup {
   init_options = {documentFormatting = true},
   filetypes = {'python', 'sql', 'json'},
@@ -57,16 +84,18 @@ require "lspconfig".efm.setup {
           },
           sql = {
               {formatCommand = "pg_format -i -s 2 -W 1", formatStdin = true},
-          },
+          }
           -- json = {
           --     {formatCommand = "jq . --indent 4 -"},
           -- }
       }
   },
+
   on_attach = function(client, bufnr)
-    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)")
   end
 }
+
 
 -- require'lspconfig'.sqlls.setup{
 --     root_dir = function() return vim.loop.cwd() end,
