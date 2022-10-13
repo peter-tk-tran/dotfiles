@@ -174,8 +174,17 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+
+" Highlight keywords in language
+syntax enable
+
+" Syntax highlighting
+filetype off
+filetype plugin indent on
+syntax on
+
 " 120 char line length
-match Error /\%121v.\+/ " Highlight chars over 120
+match Error /\%121v.\+/ " Highlight chars over 80
 set colorcolumn=120 " Column at 120 chars
 
 " Colorscheme
@@ -209,6 +218,7 @@ if has('autocmd') && v:version > 701
     augroup END
 endif
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Backups
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -239,7 +249,8 @@ set smartindent " insert new indentation if needed
 set nowrap " No text wrapping
 " set linebreak    " Set wrap to insert linebreak
 if has('autocmd')
-     autocmd FileType * setlocal formatoptions+=t " overrides filetype plugin
+    autocmd FileType * setlocal formatoptions+=t " overrides filetype plugin
+                                                 " format options setting
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -294,7 +305,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 let g:airline_theme='angr'
 let g:airline_powerline_fonts = 1"
 let g:lightline = {
-    \ 'colorscheme': 'catppuccin',
     \ 'separator': { 'left': '', 'right': '' },
     \ 'subseparator': { 'left': '', 'right': '' }
     \ }
@@ -336,6 +346,8 @@ map <C-n> :NERDTreeToggle<CR>
 
 lua vim.g.snippets = "luasnip"
 lua require('plugins')
-lua require('python_setup')
+lua require('language_setup')
 lua require('snips')
 lua require('auto_complete')
+
+set mouse=a
