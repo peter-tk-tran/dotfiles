@@ -1,5 +1,5 @@
 # Installing NeoVim
-1. `cp -r ./nvim ~/.config/`
+1. `cp -r . ~/.config/`
 2. `cd ~/.config/nvim`
 3. `nvim init.lua`
 4. While in neovim type `:PackerSync`, this will install plugins. Note IT WILL fail the first time you run it because of TreeSitter,
@@ -22,5 +22,3 @@ Nifty features:
     2c. `:Git push -u origin`
 3. LSP
 4. Telescope: Really good fuzzy finder
-
-
