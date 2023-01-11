@@ -1,4 +1,3 @@
--- local tele = require("telescope")
 local M = {} -- this is a table in lua
 M.search_dotfiles = function()
     require("telescope.builtin").find_files({
@@ -25,5 +24,3 @@ end
 
 -- TODO make telescope for datasets.
 return M
-
--- require('telescope').load_extension('project')

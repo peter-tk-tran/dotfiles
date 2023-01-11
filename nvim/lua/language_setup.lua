@@ -21,14 +21,14 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
   -- require "lsp_signature".setup({})
   --
   --
-  vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)")
+  vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.format()")
 end
-
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require('lspconfig')['pyright'].setup {
     root_dir = function() return vim.loop.cwd() end,
@@ -90,19 +90,7 @@ require "lspconfig".efm.setup {
           -- }
       }
   },
-
-  on_attach = function(client, bufnr)
-    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)")
-  end
+  on_attach = on_attach
 }
 
-
--- require'lspconfig'.sqlls.setup{
---     root_dir = function() return vim.loop.cwd() end,
---     on_attach = on_attach,
---     capabilities = capabilities,
---     filetypes = {"sql"},
---     settings = {
---     }
-
--- }
+vim.cmd("nmap <silent> <Leader>b Obreakpoint()  # XXX<Esc>")

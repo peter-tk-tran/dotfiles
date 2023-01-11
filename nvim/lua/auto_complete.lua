@@ -21,9 +21,9 @@ lspkind.init()
     },
 
     sources = cmp.config.sources({
+      { name = 'buffer' , keyword_length = 2},
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
-      { name = 'buffer' , keyword_length = 2},
       { name = 'path' },
     }),
 

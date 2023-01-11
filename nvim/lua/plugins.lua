@@ -9,12 +9,19 @@ return require('packer').startup(function()
   use 'nvim-telescope/telescope-fzy-native.nvim'
   use 'nvim-telescope/telescope-media-files.nvim'
   use 'neovim/nvim-lspconfig'
+  use 'mbbill/undotree'
+  use 'tpope/vim-surround'
+  use 'tpope/vim-commentary'
+  use 'tpope/vim-repeat'
+  use 'tpope/vim-fugitive'
+  use 'bronson/vim-trailing-whitespace'
 
-  -- Color Scheme
+  -- Visual
   use { "catppuccin/nvim", as = "catppuccin" }
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use {"shortcuts/no-neck-pain.nvim", tag = "*" }
 
-  -- Auto Completion
+    -- Auto Completion
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
