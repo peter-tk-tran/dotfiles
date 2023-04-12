@@ -31,8 +31,19 @@ vim.cmd("vnoremap < <gv")
 vim.cmd("vnoremap > >gv")
 
 -- Terminal
+
+-- Convert this to lua
+term_split = function()
+	local window_height = vim.fn.winheight(0)
+	local split_height = window_height / 3
+	vim.api.nvim_command("belowright " .. split_height .. "new")
+	vim.api.nvim_command("terminal")
+end
+
+
 vim.cmd('set shell=/bin/zsh')
-vim.keymap.set('n', '<Leader>t', ':belowright split term://zsh<CR>')
+vim.keymap.set('n', '<Leader>t', ':lua term_split()<CR>')
+ -- "term://zsh
 vim.cmd("tnoremap <Esc> <C-\\><C-n>")
 
 -- Split windows are slimmer, we have a global status line
@@ -58,10 +69,13 @@ vim.keymap.set('n', '<leader>gf', ':diffget //2<CR>')
 vim.keymap.set('n', '<leader>gj', ':diffget //3<CR>')
 
 vim.keymap.set('v', '<C-c>', '"+y<CR><CR>')
-
 -- Sexy moving selected things around
-vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', "K", ":m '<-2<CR>gv=gv")
+-- vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv")
+-- vim.keymap.set('v', "K", ":m '<-2<CR>gv=gv")
+
+-- Quick Fix List
+vim.keymap.set('n', '<C-n>', ':cnext<CR>')
+vim.keymap.set('n', '<C-p>', ':cprev<CR>')
 
 vim.g.snippets = "luasnip"
 require('plugins')
@@ -104,4 +118,19 @@ require("catppuccin").setup({
     }
 })
 vim.cmd.colorscheme "catppuccin-mocha"
+
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup({
+	open_on_setup = true,
+})
+require "lsp_signature".setup()
+
+
 

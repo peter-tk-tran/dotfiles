@@ -41,7 +41,7 @@ require('lspconfig')['pyright'].setup {
           autoSearchPaths = true,
           diagnosticMode = "workspace",
           useLibraryCodeForTypes = true,
-          typeCheckingMode = 'off',
+          typeCheckingMode = 'on',
           useLibraryCodeForTypes = true,
         },
       },

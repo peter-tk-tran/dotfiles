@@ -18,8 +18,8 @@ return require('packer').startup(function()
 
   -- Visual
   use { "catppuccin/nvim", as = "catppuccin" }
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use {"shortcuts/no-neck-pain.nvim", tag = "*" }
+  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+  use { "nvim-tree/nvim-tree.lua" }
 
     -- Auto Completion
   use 'hrsh7th/cmp-nvim-lsp'
@@ -32,6 +32,7 @@ return require('packer').startup(function()
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
 
+  use "ray-x/lsp_signature.nvim"
   use 'onsails/lspkind-nvim'
 
   -- Formatter

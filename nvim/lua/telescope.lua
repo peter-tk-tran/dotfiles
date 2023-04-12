@@ -22,5 +22,13 @@ M.search_jira = function()
     })
 end
 
+M.search_orms = function()
+    require("telescope.builtin").find_files({
+        prompt_title = "< ORMs >",
+        cwd = "~/Documents/Projects/BP/bp/database",
+    })
+end
+
+
 -- TODO make telescope for datasets.
 return M

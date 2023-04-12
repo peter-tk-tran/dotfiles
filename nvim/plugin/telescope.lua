@@ -29,3 +29,7 @@ vim.keymap.set("n", "<leader>ji", function()
     require('telescope').search_jira()
 end, {silent = true})
 
+vim.keymap.set("n", "<leader>orm", function()
+    require('telescope').search_orms()
+end, {silent = true})
+
