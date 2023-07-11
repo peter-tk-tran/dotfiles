@@ -7,6 +7,7 @@ ls.add_snippets("python", {
         ls.text_node({"try:", ""}), ls.insert_node(1, "code"), ls.text_node("", "except"), ls.insert_node(2, "exception")
     })
 })
+
 -- ls.add_snippets("python", {
 --     ls.snippet("isn", {
 --         ls.isn(1, {

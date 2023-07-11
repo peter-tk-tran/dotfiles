@@ -12,13 +12,12 @@ vim.cmd("nnoremap <leader>u :UndotreeToggle<cr>")
 
 -- Colors
 vim.opt.termguicolors = true
-vim.cmd("highlight Normal guibg=black guifg=white")
 
 -- Tabbing
 vim.opt.tabstop = 4
-vim.opt.shiftwidth= 4
+vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
-vim.opt.tabstop=4
+vim.opt.tabstop = 4
 
 -- Copies current path to register
 vim.cmd('nmap cp :let @" = expand("%:p")<CR>')
@@ -33,7 +32,7 @@ vim.cmd("vnoremap > >gv")
 -- Terminal
 
 -- Convert this to lua
-term_split = function()
+Term_split = function()
 	local window_height = vim.fn.winheight(0)
 	local split_height = window_height / 3
 	vim.api.nvim_command("belowright " .. split_height .. "new")
@@ -42,8 +41,8 @@ end
 
 
 vim.cmd('set shell=/bin/zsh')
-vim.keymap.set('n', '<Leader>t', ':lua term_split()<CR>')
- -- "term://zsh
+vim.keymap.set('n', '<Leader>t', ':lua Term_split()<CR>')
+-- "term://zsh
 vim.cmd("tnoremap <Esc> <C-\\><C-n>")
 
 -- Split windows are slimmer, we have a global status line
@@ -61,7 +60,7 @@ vim.opt.incsearch = true
 
 vim.opt.colorcolumn = "120"
 vim.opt.ignorecase = true -- set search to be case insensitive
-vim.opt.smartcase = true -- set search to be case sensitive when item has upper case letter
+vim.opt.smartcase = true  -- set search to be case sensitive when item has upper case letter
 
 -- Git
 vim.keymap.set('n', '<leader>gs', ':G<CR>')
@@ -86,51 +85,47 @@ require('auto_complete')
 
 vim.opt.wrap = false
 
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    disable = {},
-  },
-  indent = {
-    enable = false,
-    disable = {},
-  },
-  ensure_installed = {
-      'python',
-      'sql',
-      'typescript',
-      'javascript',
-      'rust'
-  },
+require 'nvim-treesitter.configs'.setup {
+	highlight = {
+		enable = true,
+		disable = {},
+	},
+	indent = {
+		enable = false,
+		disable = {},
+	},
+	ensure_installed = {
+		'python',
+		'sql',
+		'typescript',
+		'javascript',
+		'rust'
+	},
 }
 -- Normie colorscheme
 require("catppuccin").setup({
-    dim_inactive = {
-		enabled = true,
-		shade = "dark",
-		percentage = 0.15,
+	flavour = "mocha",          -- latte, frappe, macchiato, mocha
+	transparent_background = true, -- disables setting the background color. Matches the terminal background
+	term_colors = true,         -- sets terminal colors (e.g. `g:terminal_color_0`)
+	no_italic = false,          -- Force no italic
+	no_bold = false,            -- Force no bold
+	no_underline = false,       -- Force no underline
+	styles = {
+		-- Handles the styles of general hi groups (see `:h highlight-args`):
+		comments = { "italic" }, -- Change the style of comments
+		conditionals = { "italic" },
 	},
-    integrations = {
+	color_overrides = {},
+	custom_highlights = {},
+	integrations = {
 		cmp = true,
-		gitgutter = true,
+		gitsigns = true,
+		nvimtree = true,
 		telescope = true,
-		treesitter = true,
-    }
+		notify = false,
+		mini = false,
+		-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+	},
 })
 vim.cmd.colorscheme "catppuccin-mocha"
-
--- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
--- empty setup using defaults
-require("nvim-tree").setup({
-	open_on_setup = true,
-})
 require "lsp_signature".setup()
-
-
-
