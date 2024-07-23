@@ -8,13 +8,13 @@ return require('packer').startup(function()
 	}
 	use 'nvim-telescope/telescope-fzy-native.nvim'
 	use 'nvim-telescope/telescope-media-files.nvim'
-	use 'neovim/nvim-lspconfig'
 	use 'mbbill/undotree'
 	use 'tpope/vim-surround'
 	use 'tpope/vim-commentary'
 	use 'tpope/vim-repeat'
 	use 'tpope/vim-fugitive'
 	use 'bronson/vim-trailing-whitespace'
+	use {'kkoomen/vim-doge', run = ':call doge#install()'}
 
 	-- Visual
 	use { "catppuccin/nvim", as = "catppuccin" }
@@ -37,7 +37,10 @@ return require('packer').startup(function()
 	use "ray-x/lsp_signature.nvim"
 	use 'onsails/lspkind-nvim'
 
-	-- Formatter
+	-- Lsp
+	use "williamboman/mason-lspconfig.nvim"
+	use 'williamboman/mason.nvim'
+	use 'neovim/nvim-lspconfig'
 	use 'lukas-reineke/lsp-format.nvim'
 	use 'mattn/efm-langserver'
 
@@ -49,21 +52,5 @@ return require('packer').startup(function()
 		requires = "nvim-treesitter/nvim-treesitter",
 		-- Uncomment next line if you want to follow only stable versions
 		-- tag = "*"
-	}
-
-
-	-- Remote SSH
-	use {
-		'chipsenkbeil/distant.nvim',
-		config = function()
-			require('distant').setup {
-				-- Applies Chip's personal settings to every machine you connect to
-				--
-				-- 1. Ensures that distant servers terminate with no connections
-				-- 2. Provides navigation bindings for remote directories
-				-- 3. Provides keybinding to jump into a remote file's parent directory
-				['*'] = require('distant.settings').chip_default()
-			}
-		end
 	}
 end)

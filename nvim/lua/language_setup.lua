@@ -1,4 +1,6 @@
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
+require("mason").setup()
+require("mason-lspconfig").setup()
+
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -17,21 +19,27 @@ local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl',
-		'<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
-	-- require "lsp_signature".setup({})
-	--
-	--
+	vim.api.nvim_create_autocmd("BufWritePre", {
+	  buffer = buffer,
+	  callback = function()
+		vim.lsp.buf.code_action({
+		  context = { only = { "source.organizeImports" } },
+		  apply = true,
+		})
+		vim.wait(100)
+	  end,
+    })
 	vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.format()")
 end
 -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require('lspconfig')['pyright'].setup {
+require('lspconfig').pyright.setup {
 	root_dir = function() return vim.loop.cwd() end,
 	on_attach = on_attach,
 	single_file_support = true,
@@ -42,13 +50,30 @@ require('lspconfig')['pyright'].setup {
 				autoSearchPaths = true,
 				diagnosticMode = "workspace",
 				useLibraryCodeForTypes = true,
-				typeCheckingMode = 'on'
+				typeCheckingMode = 'on',
 			}
-		}
+		},
+		reportPrivateImportUsage = false
 	}
 }
 
-require('lspconfig')['rust_analyzer'].setup {
+require('lspconfig').ruff_lsp.setup {
+  on_attach = on_attach,
+  root_dir = function() return vim.loop.cwd() end,
+  init_options = {
+    settings = {
+	  lint = {
+        -- args = {"--config=~/Documents/Joule-The-SI-Copilot--Approaches/pyproject.toml"}, -- Specify linting args here
+        enable = true, -- Enable linting
+        run = "onSave" -- Run linting on save
+      },
+	  fixAll = true,
+	  organizeImports = true,
+    }
+  }
+}
+
+require('lspconfig').rust_analyzer.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -60,51 +85,5 @@ require('lspconfig')['rust_analyzer'].setup {
 	}
 }
 
-require "lspconfig".efm.setup {
-	init_options = { documentFormatting = true },
-	filetypes = { 'python', 'sql', 'json', 'lua' },
-	settings = {
-		rootMarkers = { ".git/" },
-		languages = {
-			python = {
-				{
-					formatCommand =
-					"isort --line-length 120 -m VERTICAL_HANGING_INDENT --tc --profile black -",
-					-- "isort --line-length 120 -m VERTICAL_HANGING_INDENT -sp ~/.isort.cfg --tc --profile black -",
-					formatStdin = true
-				}, {
-				formatCommand = "black --line-length 120 --quiet --preview -",
-				formatStdin = true
-			}
-			},
-			sql = {
-				{ formatCommand = "pg_format -i -s 2 -W 1", formatStdin = true }
-			},
-			lua = { { formatCommand = "lua-format -i --column_width 120", formatStdin = true } }
-		}
-	},
-	on_attach = on_attach
-}
-
-require 'lspconfig'.lua_ls.setup {
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = 'LuaJIT'
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { 'vim' }
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true)
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = { enable = false }
-		}
-	}
-}
 
 vim.cmd("nmap <silent> <Leader>b Obreakpoint()  # XXX<Esc>")

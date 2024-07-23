@@ -20,7 +20,10 @@ vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 
 -- Copies current path to register
-vim.cmd('nmap cp :let @" = expand("%:p")<CR>')
+-- vim.cmd('nmap cp :let @" = expand("%:p")<CR>')
+-- save to clipboard isntead
+vim.cmd('nmap cp :let @+ = expand("%:p")<CR>')
+
 
 -- Map sort function
 vim.cmd("vnoremap <Leader>s :sort<CR>")
@@ -81,7 +84,6 @@ require('plugins')
 require('language_setup')
 require('snips')
 require('auto_complete')
-
 
 vim.opt.wrap = false
 
