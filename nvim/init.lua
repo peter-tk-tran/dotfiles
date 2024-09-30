@@ -104,30 +104,19 @@ require 'nvim-treesitter.configs'.setup {
 		'rust'
 	},
 }
--- Normie colorscheme
-require("catppuccin").setup({
-	flavour = "mocha",          -- latte, frappe, macchiato, mocha
-	transparent_background = true, -- disables setting the background color. Matches the terminal background
-	term_colors = true,         -- sets terminal colors (e.g. `g:terminal_color_0`)
-	no_italic = false,          -- Force no italic
-	no_bold = false,            -- Force no bold
-	no_underline = false,       -- Force no underline
-	styles = {
-		-- Handles the styles of general hi groups (see `:h highlight-args`):
-		comments = { "italic" }, -- Change the style of comments
-		conditionals = { "italic" },
+
+-- For copy and pasting in remote servers w/ wezterm
+vim.g.clipboard = {
+	name = 'OSC 52',
+	copy = {
+	  ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+	  ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
 	},
-	color_overrides = {},
-	custom_highlights = {},
-	integrations = {
-		cmp = true,
-		gitsigns = true,
-		nvimtree = true,
-		telescope = true,
-		notify = false,
-		mini = false,
-		-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+	paste = {
+	  ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+	  ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
 	},
-})
+}
+
 vim.cmd.colorscheme "catppuccin-mocha"
 require "lsp_signature".setup()

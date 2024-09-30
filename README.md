@@ -1,9 +1,7 @@
 # Dotfiles
 
 ## Neovim
-Note: My current nvim version is `0.9.5`
-I think as long as you're above this version you should be good.
-`https://github.com/neovim/neovim`
+Note: My current nvim version is `0.10.1`: `https://github.com/neovim/neovim`
 
 ### Setup
 1. Copy nvim config `cp -r nvim ~/.config/nvim`
