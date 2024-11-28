@@ -8,6 +8,8 @@ vim.opt.relativenumber = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
+vim.opt.textwidth = 120  -- Learned about gqap to format lines into paragraphs.. wow
+
 vim.cmd("nnoremap <leader>u :UndotreeToggle<cr>")
 
 -- Colors
@@ -79,31 +81,9 @@ vim.keymap.set('v', '<C-c>', '"+y<CR><CR>')
 vim.keymap.set('n', '<C-n>', ':cnext<CR>')
 vim.keymap.set('n', '<C-p>', ':cprev<CR>')
 
-vim.g.snippets = "luasnip"
-require('plugins')
-require('language_setup')
-require('snips')
-require('auto_complete')
-
+-- vim.g.snippets = "luasnip"
+require("config.lazy")
 vim.opt.wrap = false
-
-require 'nvim-treesitter.configs'.setup {
-	highlight = {
-		enable = true,
-		disable = {},
-	},
-	indent = {
-		enable = false,
-		disable = {},
-	},
-	ensure_installed = {
-		'python',
-		'sql',
-		'typescript',
-		'javascript',
-		'rust'
-	},
-}
 
 -- For copy and pasting in remote servers w/ wezterm
 vim.g.clipboard = {
@@ -117,6 +97,3 @@ vim.g.clipboard = {
 	  ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
 	},
 }
-
-vim.cmd.colorscheme "catppuccin-mocha"
-require "lsp_signature".setup()
