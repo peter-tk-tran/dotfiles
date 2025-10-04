@@ -1,94 +1,152 @@
 return {
-  {
-    "mfussenegger/nvim-dap",
-    dependencies = {
-      "leoluz/nvim-dap-go",
-      "rcarriga/nvim-dap-ui",
-      "theHamsta/nvim-dap-virtual-text",
-      "nvim-neotest/nvim-nio",
-      "williamboman/mason.nvim",
-    },
-    config = function()
-      local dap = require "dap"
-      local ui = require "dapui"
+    {
+        "mfussenegger/nvim-dap",
+        dependencies = {
+            "rcarriga/nvim-dap-ui",
+            "nvim-neotest/nvim-nio",
+            "williamboman/mason.nvim",
+            "mfussenegger/nvim-dap-python",
+        },
+        config = function()
+            local dap = require "dap"
+            local ui = require "dapui"
+            ui.setup({})
 
-      require("dapui").setup()
-      require("dap-go").setup()
+            dap.set_log_level("TRACE")
 
-      require("nvim-dap-virtual-text").setup {
-        -- This just tries to mitigate the chance that I leak tokens here. Probably won't stop it from happening...
-        display_callback = function(variable)
-          local name = string.lower(variable.name)
-          local value = string.lower(variable.value)
-          if name:match "secret" or name:match "api" or value:match "secret" or value:match "api" then
-            return "*****"
-          end
 
-          if #variable.value > 15 then
-            return " " .. string.sub(variable.value, 1, 15) .. "... "
-          end
+            require("dap-python").setup("/Users/I747624/Documents/CAP-Copilot/.venv/bin/python")
+            -- Python configurations
+            table.insert(dap.configurations.python,
+                {
+                    type = "python",
+                    request = "launch",
+                    name = "Launch Module",
+                    module = "src",             -- Specify the module name here (replace "src" with your module name)
+                    args = {},                  -- Optional: Add command-line arguments
+                    justMyCode = false,         -- Optional: Debug only your code
+                    cwd = "${workspaceFolder}", -- Set the working directory
+                }
+            )
 
-          return " " .. variable.value
+            -- depending on your installation location.
+            -- local debugger_location = os.getenv("HOME") .. "/Software/vscode-node-debug2"
+
+            -- dap.adapters.node = {
+            -- 	type = "executable",
+            -- 	command = "node",
+            -- 	args = { debugger_location .. "/out/src/nodeDebug.js" },
+            --  }
+
+            -- Add NodeJS debugger configuration
+            dap.adapters["pwa-node"] = {
+                type = "server",
+                host = "::1",
+                port = "${port}",
+                executable = {
+                    command = "js-debug-adapter",
+                    args = { "${port}" },
+                },
+            }
+
+            for _, language in ipairs({ "typescript", "javascript" }) do
+                require("dap").configurations[language] = {
+                    {
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Launch file",
+                        program = "${file}",
+                        cwd = "${workspaceFolder}",
+                    },
+                    {
+                        type = "pwa-node",
+                        request = "attach",
+                        name = "Attach",
+                        processId = require 'dap.utils'.pick_process,
+                        cwd = "${workspaceFolder}",
+                    },
+                    {
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Debug Mocha Tests",
+                        -- trace = true, -- include debugger info
+                        runtimeExecutable = "node",
+                        runtimeArgs = {
+                            "./node_modules/mocha/bin/mocha.js",
+                            "--recursive", -- Ensure all test files are included
+                            "test/**/*.js" -- Match your test files
+                        },
+                        rootPath = "${workspaceFolder}",
+                        cwd = "${workspaceFolder}",
+                        console = "integratedTerminal",
+                        internalConsoleOptions = "neverOpen",
+                    }
+
+                }
+            end
+
+            -- local last_args = nil
+            -- dap.configurations.javascript = {
+            -- 	{
+            -- 		type = "pwa-node",
+            -- 		request = "launch",
+            -- 		name = "Launch Program",
+            -- 		program = "${file}",
+            -- 		cwd = "${workspaceFolder}",
+            -- 	},
+            -- 	{
+            -- 		type = "pwa-node",
+            -- 		request = "launch",
+            -- 		name = "Debug Mocha Tests",
+            -- 		program = "${workspaceFolder}/node_modules/.bin/mocha",
+            -- 		args = function()
+            -- 			if last_args then
+            -- 				return last_args
+            -- 			end
+            -- 			return { "--no-timeouts", "--require", "chai/register-expect.js", "${file}" }
+            -- 		end,
+            -- 		cwd = "${workspaceFolder}",
+            -- 		skipFiles = { "<node_internals>/**" },
+            -- 		console = "integratedTerminal",
+            -- 	}
+            -- }
+
+
+            vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
+            vim.keymap.set("n", "<space>b", dap.toggle_breakpoint)
+            vim.keymap.set("n", "<space>gb", dap.run_to_cursor)
+
+            -- Eval var under cursor
+            vim.keymap.set("n", "<space>?", function()
+                require("dapui").eval(nil, { enter = true })
+            end)
+
+            vim.keymap.set("n", "<F1>", dap.continue)
+            vim.keymap.set("n", "<F2>", dap.step_into)
+            vim.keymap.set("n", "<F3>", dap.step_over)
+            vim.keymap.set("n", "<F4>", dap.step_out)
+            vim.keymap.set("n", "<F5>", dap.step_back)
+            vim.keymap.set("n", "<F13>", dap.restart)
+
+            dap.listeners.before.attach.dapui_config = function()
+                ui.open()
+            end
+            dap.listeners.before.launch.dapui_config = function()
+                ui.open()
+            end
+            -- -- Hook to capture args on start
+            -- dap.listeners.before.["store_args"] = function(session, body)
+            -- local config = session.config
+            -- last_args = config.args
+            -- end
+            dap.listeners.before.event_terminated.dapui_config = function(session, body)
+                local config = session.config
+                last_args = config.args
+                -- ui.close()
+            end
+            -- dap.listeners.before.event_exited.dapui_config = function()
+            --   ui.close()
+            -- end
         end,
-      }
-
-      -- Handled by nvim-dap-go
-      -- dap.adapters.go = {
-      --   type = "server",
-      --   port = "${port}",
-      --   executable = {
-      --     command = "dlv",
-      --     args = { "dap", "-l", "127.0.0.1:${port}" },
-      --   },
-      -- }
-
-      local elixir_ls_debugger = vim.fn.exepath "elixir-ls-debugger"
-      if elixir_ls_debugger ~= "" then
-        dap.adapters.mix_task = {
-          type = "executable",
-          command = elixir_ls_debugger,
-        }
-
-        dap.configurations.elixir = {
-          {
-            type = "mix_task",
-            name = "phoenix server",
-            task = "phx.server",
-            request = "launch",
-            projectDir = "${workspaceFolder}",
-            exitAfterTaskReturns = false,
-            debugAutoInterpretAllModules = false,
-          },
-        }
-      end
-
-      vim.keymap.set("n", "<space>b", dap.toggle_breakpoint)
-      vim.keymap.set("n", "<space>gb", dap.run_to_cursor)
-
-      -- Eval var under cursor
-      vim.keymap.set("n", "<space>?", function()
-        require("dapui").eval(nil, { enter = true })
-      end)
-
-      vim.keymap.set("n", "<F1>", dap.continue)
-      vim.keymap.set("n", "<F2>", dap.step_into)
-      vim.keymap.set("n", "<F3>", dap.step_over)
-      vim.keymap.set("n", "<F4>", dap.step_out)
-      vim.keymap.set("n", "<F5>", dap.step_back)
-      vim.keymap.set("n", "<F13>", dap.restart)
-
-      dap.listeners.before.attach.dapui_config = function()
-        ui.open()
-      end
-      dap.listeners.before.launch.dapui_config = function()
-        ui.open()
-      end
-      dap.listeners.before.event_terminated.dapui_config = function()
-        ui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        ui.close()
-      end
-    end,
-  },
+    },
 }

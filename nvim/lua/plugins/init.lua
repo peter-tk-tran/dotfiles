@@ -15,5 +15,6 @@ return {
 	'nvim-tree/nvim-tree.lua',
 	'norcalli/nvim-colorizer.lua',
 
-	'github/copilot.vim'
+	'github/copilot.vim',
+    'nvim-tree/nvim-tree.lua'
 }

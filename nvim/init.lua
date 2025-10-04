@@ -8,7 +8,7 @@ vim.opt.relativenumber = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
-vim.opt.textwidth = 120  -- Learned about gqap to format lines into paragraphs.. wow
+vim.opt.textwidth = 120 -- Learned about gqap to format lines into paragraphs.. wow
 
 vim.cmd("nnoremap <leader>u :UndotreeToggle<cr>")
 
@@ -16,6 +16,7 @@ vim.cmd("nnoremap <leader>u :UndotreeToggle<cr>")
 vim.opt.termguicolors = true
 
 -- Tabbing
+vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
@@ -38,10 +39,10 @@ vim.cmd("vnoremap > >gv")
 
 -- Convert this to lua
 Term_split = function()
-	local window_height = vim.fn.winheight(0)
-	local split_height = window_height / 3
-	vim.api.nvim_command("belowright " .. split_height .. "new")
-	vim.api.nvim_command("terminal")
+    local window_height = vim.fn.winheight(0)
+    local split_height = window_height / 3
+    vim.api.nvim_command("belowright " .. split_height .. "new")
+    vim.api.nvim_command("terminal")
 end
 
 
@@ -87,13 +88,13 @@ vim.opt.wrap = false
 
 -- For copy and pasting in remote servers w/ wezterm
 vim.g.clipboard = {
-	name = 'OSC 52',
-	copy = {
-	  ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-	  ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-	},
-	paste = {
-	  ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-	  ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-	},
+    name = 'OSC 52',
+    copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    },
 }
