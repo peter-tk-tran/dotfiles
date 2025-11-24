@@ -5,7 +5,6 @@ return {
             "rcarriga/nvim-dap-ui",
             "nvim-neotest/nvim-nio",
             "williamboman/mason.nvim",
-            "mfussenegger/nvim-dap-python",
         },
         config = function()
             local dap = require "dap"
@@ -13,22 +12,6 @@ return {
             ui.setup({})
 
             dap.set_log_level("TRACE")
-
-
-            require("dap-python").setup("/Users/I747624/Documents/CAP-Copilot/.venv/bin/python")
-            -- Python configurations
-            table.insert(dap.configurations.python,
-                {
-                    type = "python",
-                    request = "launch",
-                    name = "Launch Module",
-                    module = "src",             -- Specify the module name here (replace "src" with your module name)
-                    args = {},                  -- Optional: Add command-line arguments
-                    justMyCode = false,         -- Optional: Debug only your code
-                    cwd = "${workspaceFolder}", -- Set the working directory
-                }
-            )
-
             -- depending on your installation location.
             -- local debugger_location = os.getenv("HOME") .. "/Software/vscode-node-debug2"
 
